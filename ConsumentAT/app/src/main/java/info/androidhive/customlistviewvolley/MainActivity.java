@@ -52,7 +52,7 @@ public class MainActivity extends Activity {
 
     // Movies json url
     //private static final String url = "http://api.androidhive.info/json/movies.json2";
-    private static final String url2 = "http://www.json-generator.com/api/json/get/cjTRssXYwO?indent=2";
+    private static final String url2 = "http://www.json-generator.com/api/json/get/ceqmosPsde?indent=2";
 
     private ProgressDialog pDialog;
     private List<Movie> movieList = new ArrayList<Movie>();
@@ -120,7 +120,6 @@ public class MainActivity extends Activity {
                 Log.d("INFO: amount2", output);
 
                 consArray[choice+1] = consArray[choice+1] + amount;
-                //Log.d("INFO: Day: " + readTemp + String.valueOf(" Bier: " + consArray[position+1]), "");
 
                 db.updateContact(dateTime, consArray[choice+1], articles[choice]);
 
@@ -214,8 +213,7 @@ public class MainActivity extends Activity {
         Date now = new Date();
         String name = new SimpleDateFormat("ddMMyyyy").format(now);
 
-        // das hier ist ein test commentar
-        dateTime = name;
+        dateTime = "29021016";
 
         System.out.println("INFO: today is day " + dateTime);
 
