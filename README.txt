@@ -8,3 +8,7 @@ INFO: on the homepage you find all the products which can be added, for now ther
 > MainActivityJava
 
 If you try the application check out the "logcat" there you will find the output of the app, including informations about the current day, what you are saving, how much in L, and where you are saving it. To find the output quicker use a filter looking for "INFO:" or simply search for it in the "6: AndroidMonitor".
+
+> implemented second ACTIVITY, where first shows list-view with current products and adds them to local saved database. Added MENU, where it can be chosen between HISTORY (activity 2) and CONSUME (activity 1).
+
+> combined Database with ListView, second Activity and Navigation Bar
