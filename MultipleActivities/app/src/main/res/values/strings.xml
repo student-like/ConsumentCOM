@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">ChangeActivity</string>
+    <string name="seite2">SEITE_2</string>
+    <string name="seite1">SEITE_1</string>
+</resources>

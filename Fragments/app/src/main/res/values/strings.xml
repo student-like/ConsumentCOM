@@ -1,0 +1,5 @@
+<resources>
+    <string name="portrait_mode_text_view">portrait_mode_text_view</string>
+    <string name="landscape_mode_text_view">landscape_mode_text_view</string>
+    <string name="app_name">fick_dich</string>
+</resources>
