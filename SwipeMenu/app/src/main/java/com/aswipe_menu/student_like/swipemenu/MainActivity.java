@@ -1,7 +1,6 @@
 package com.aswipe_menu.student_like.swipemenu;
 
-import android.app.ProgressDialog;
-import android.os.Build;
+import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -10,30 +9,11 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 
-import android.widget.ListView;
-import android.widget.TextView;
-
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.VolleyLog;
-import com.android.volley.toolbox.JsonArrayRequest;
-import com.aswipe_menu.student_like.swipemenu.ListView.AppController;
-import com.aswipe_menu.student_like.swipemenu.ListView.CustomListAdapter;
-import com.aswipe_menu.student_like.swipemenu.ListView.Movie;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.aswipe_menu.student_like.swipemenu.Fragments.ConsumerFragment;
+import com.aswipe_menu.student_like.swipemenu.Fragments.StatsFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -56,6 +36,10 @@ public class MainActivity extends AppCompatActivity {
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
+
+        // swipe tab-layout
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+        tabLayout.setupWithViewPager(mViewPager);
 
     }
 
@@ -96,8 +80,6 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
-            // Return a PlaceholderFragment (defined as a static inner class below).
-            //return PlaceholderFragment.newInstance(position + 1);
 
             switch (position) {
                 case 0:
@@ -120,11 +102,11 @@ public class MainActivity extends AppCompatActivity {
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "SECTION 1";
+                    return "HISTORY";
                 case 1:
-                    return "SECTION 2";
+                    return "CONSUME";
                 case 2:
-                    return "SECTION 3";
+                    return "STATS";
             }
             return null;
         }

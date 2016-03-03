@@ -1,4 +1,4 @@
-package com.aswipe_menu.student_like.swipemenu;
+package com.aswipe_menu.student_like.swipemenu.Fragments;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
@@ -16,6 +16,8 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.aswipe_menu.student_like.swipemenu.ListView.AppController;
 import com.aswipe_menu.student_like.swipemenu.ListView.CustomListAdapter;
 import com.aswipe_menu.student_like.swipemenu.ListView.Movie;
+import com.aswipe_menu.student_like.swipemenu.MainActivity;
+import com.aswipe_menu.student_like.swipemenu.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -27,7 +29,7 @@ import java.util.List;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class PlaceholderFragment extends Fragment {
+public class ConsumerFragment extends Fragment {
 
     // ====================== LIST-VIEW DEFINITIONS =======================
     // Log tag
@@ -44,15 +46,15 @@ public class PlaceholderFragment extends Fragment {
      */
     private static final String ARG_SECTION_NUMBER = "section_number";
 
-    public PlaceholderFragment() {
+    public ConsumerFragment() {
     }
 
     /**
      * Returns a new instance of this fragment for the given section
      * number.
      */
-    public static PlaceholderFragment newInstance(int sectionNumber) {
-        PlaceholderFragment fragment = new PlaceholderFragment();
+    public static ConsumerFragment newInstance(int sectionNumber) {
+        ConsumerFragment fragment = new ConsumerFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_SECTION_NUMBER, sectionNumber);
         fragment.setArguments(args);

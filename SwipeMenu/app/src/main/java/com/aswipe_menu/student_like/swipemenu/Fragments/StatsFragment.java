@@ -1,4 +1,4 @@
-package com.aswipe_menu.student_like.swipemenu;
+package com.aswipe_menu.student_like.swipemenu.Fragments;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
@@ -7,6 +7,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.aswipe_menu.student_like.swipemenu.MainActivity;
+import com.aswipe_menu.student_like.swipemenu.R;
 
 /**
  * A placeholder fragment containing a simple view.
