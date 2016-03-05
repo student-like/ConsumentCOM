@@ -13,7 +13,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
 
     // Database Name
-    private static final String DATABASE_NAME = "consumentAT";
+    private static final String DATABASE_NAME = "consumentCOM";
 
     // Contacts table name
     private static final String TABLE_CONSUMPTION = "consumption";
@@ -26,7 +26,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String OFEN = "ofen";
     private static final String ZIGA = "ziga";
     private static final String SHOT = "shot";
-
 
     public DatabaseHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -57,10 +56,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     // Adding new Day
     public void addDay(String dayTime) {
+
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 
-        System.out.println("INFO: creating new Day " + dayTime  + "...");
+        System.out.println("INFOs:: creating new Day " + dayTime  + "...");
 
         values.put(DAY_TIME, dayTime);//consumption.newDay());
         values.put(BIER, 0); // Contact Name
@@ -79,7 +79,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 
-        System.out.println("INFO: updating " + id + ", " + AddedVal + ", " + choice + " ...");
+        System.out.println("INFOs:: updating " + id + ", " + AddedVal + ", " + choice + " ...");
 
         values.put(choice, AddedVal); // Contact Phone
 
@@ -100,14 +100,27 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public Double loadVal(String dayTime, String choice) {
         SQLiteDatabase db = this.getReadableDatabase();
 
-        double valueTemp = 0;
-        Cursor cursor = db.rawQuery("SELECT " + choice + " FROM consumption WHERE dayTime = " + dayTime, null);
+        if (db == null) {
+            System.out.println("FEHLER IND HOOD...");
 
+            return null;
+        }
+
+        double valueTemp = 0;
+
+        //Cursor cursor = db.rawQuery("SELECT " + choice + " FROM consumption WHERE dayTime = " + dayTime, null);
+
+        //Cursor cursor = db.rawQuery("SELECT bier,wein,ofen,ziga,shot " + "FROM consumption WHERE dayTime = " + dayTime, null);
+
+        Cursor cursor = db.rawQuery("SELECT " + choice + " FROM consumption WHERE dayTime = ?",new String[] { dayTime } ,null);
+
+        // if cursor returns to be 0 ?
         if (cursor.moveToFirst()) {
             valueTemp = Double.parseDouble(cursor.getString(cursor.getColumnIndex(choice)));
         }
+        cursor.close();
 
-        System.out.println("INFO: last " + choice + " value in day " + dayTime + " is " + valueTemp +  "...");
+        System.out.println("INFOs:: last " + choice + " value in day " + dayTime + " is " + valueTemp + "...");
 
         return valueTemp;
     }
