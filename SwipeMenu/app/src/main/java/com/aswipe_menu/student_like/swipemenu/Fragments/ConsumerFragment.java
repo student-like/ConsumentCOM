@@ -50,7 +50,6 @@ public class ConsumerFragment extends Fragment {
     double consArray[] = new double [6];
     String articles[] = {"bier", "wein", "ofen", "ziga", "shot"};
 
-    String lastDayTime;
     String dateTime;
     String date;
 

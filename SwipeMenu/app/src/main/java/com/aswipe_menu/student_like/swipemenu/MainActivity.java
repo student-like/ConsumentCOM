@@ -18,20 +18,18 @@ import com.aswipe_menu.student_like.swipemenu.Fragments.ConsumerFragment;
 import com.aswipe_menu.student_like.swipemenu.Fragments.HistoryFragment;
 import com.aswipe_menu.student_like.swipemenu.Fragments.StatsFragment;
 
-public class MainActivity extends AppCompatActivity
-        implements BlankFragment.OnFragmentInteractionListener{
+public class MainActivity extends AppCompatActivity implements BlankFragment.OnFragmentInteractionListener{
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
-    private ViewPager mViewPager;
 
-    public void onFragmentInteraction(Uri uri){
-        System.out.println("INFOs:: ON-FRAGMENT-INTERACTION...");
-        //you can leave it empty
-    }
+    public void onFragmentInteraction(Uri uri){}
+
+    private ViewPager mViewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
 
         setContentView(R.layout.activity_main);
 
@@ -42,7 +40,7 @@ public class MainActivity extends AppCompatActivity
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
-        mViewPager = (ViewPager) findViewById(R.id.container);
+        mViewPager = (ViewPager) findViewById(R.id.container_main);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
         // do not update any nearby screen, let me do it manually with addOnPageListener
@@ -63,6 +61,7 @@ public class MainActivity extends AppCompatActivity
                 {
                     //System.out.println("INFOs:: UPDATE onPAGE_LISTENER_ON position: " + position + "...");
                     mViewPager.getAdapter().notifyDataSetChanged();
+
                 }
             }
 
@@ -125,7 +124,9 @@ public class MainActivity extends AppCompatActivity
 
         @Override
         public int getItemPosition(Object object) {
-            return POSITION_NONE;
+            if (object instanceof HistoryFragment)
+                return POSITION_NONE;
+            return super.getItemPosition(object);
         }
 
         @Override
@@ -146,4 +147,5 @@ public class MainActivity extends AppCompatActivity
             return null;
         }
     }
+
 }

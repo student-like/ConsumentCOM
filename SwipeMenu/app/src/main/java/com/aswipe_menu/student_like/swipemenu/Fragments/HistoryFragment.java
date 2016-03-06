@@ -85,8 +85,6 @@ public class HistoryFragment extends Fragment {
         super.onResume();
     }
 
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
