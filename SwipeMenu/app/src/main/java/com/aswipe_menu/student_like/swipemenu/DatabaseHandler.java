@@ -100,17 +100,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public Double loadVal(String dayTime, String choice) {
         SQLiteDatabase db = this.getReadableDatabase();
 
-        if (db == null) {
-            System.out.println("FEHLER IND HOOD...");
-
-            return null;
-        }
-
         double valueTemp = 0;
-
-        //Cursor cursor = db.rawQuery("SELECT " + choice + " FROM consumption WHERE dayTime = " + dayTime, null);
-
-        //Cursor cursor = db.rawQuery("SELECT bier,wein,ofen,ziga,shot " + "FROM consumption WHERE dayTime = " + dayTime, null);
 
         Cursor cursor = db.rawQuery("SELECT " + choice + " FROM consumption WHERE dayTime = ?",new String[] { dayTime } ,null);
 
@@ -120,7 +110,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         }
         cursor.close();
 
-        System.out.println("INFOs:: last " + choice + " value in day " + dayTime + " is " + valueTemp + "...");
+        //System.out.println("INFOs:: last " + choice + " value in day " + dayTime + " is " + valueTemp + "...");
 
         return valueTemp;
     }

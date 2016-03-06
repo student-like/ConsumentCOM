@@ -23,8 +23,6 @@ public class StatsFragment extends Fragment {
     // Movies json url
     private static final String url2 = "http://www.json-generator.com/api/json/get/ceqmosPsde?indent=2";
 
-    private ProgressDialog pDialog;
-
     /**
      * The fragment argument representing the section number for this
      * fragment.
@@ -32,6 +30,7 @@ public class StatsFragment extends Fragment {
     private static final String ARG_SECTION_NUMBER = "section_number";
 
     public StatsFragment() {
+       // System.out.println("INFOs:: Constructor...");
     }
 
     /**
@@ -39,6 +38,8 @@ public class StatsFragment extends Fragment {
      * number.
      */
     public static StatsFragment newInstance(int sectionNumber) {
+        //System.out.println("INFOs:: HistoryFragment...");
+
         StatsFragment fragment = new StatsFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_SECTION_NUMBER, sectionNumber);
@@ -47,14 +48,33 @@ public class StatsFragment extends Fragment {
     }
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        //System.out.println("INFOs:: onCERATE...");
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+
+        System.out.println("INFOs:: OnCreateView STATS...");
 
         TextView textView = (TextView) rootView.findViewById(R.id.section_label);
         textView.setText("< HERE ARE THE STATS >");
 
         return rootView;
     }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        //System.out.println("INFOs:: OnVIEWCREATED STATS...");
+
+        // Setup any handles to view objects here
+        // EditText etFoo = (EditText) view.findViewById(R.id.etFoo);
+    }
+
 
 }
