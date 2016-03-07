@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -36,7 +37,7 @@ import java.util.List;
 public class HistoryFragment extends Fragment {
 
     // ====================== DATA-BASE DEFINITIONS =======================
-    int numbOfRows;// return number of rows of HISTORY, is totally conusmed products
+    int numbOfRows = 0;// return number of rows of HISTORY, is totally conusmed products
 
     // ====================== LIST-VIEW DEFINITIONS =======================
     // Log tag
@@ -54,9 +55,7 @@ public class HistoryFragment extends Fragment {
      */
     private static final String ARG_SECTION_NUMBER = "section_number";
 
-    public HistoryFragment() {
-
-    }
+    public HistoryFragment() {}
 
     /**
      * Returns a new instance of this fragment for the given section
@@ -73,7 +72,7 @@ public class HistoryFragment extends Fragment {
         return fragment;
     }
 
-    @Override
+   /* @Override
     public void onPause() {
         //System.out.println("INFOs:: HISTORY is on pause...");
         super.onPause();
@@ -83,7 +82,7 @@ public class HistoryFragment extends Fragment {
     public void onResume() {
         System.out.println("INFOs:: HISTORY is on resume...");
         super.onResume();
-    }
+    }*/
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -106,7 +105,7 @@ public class HistoryFragment extends Fragment {
         final List<Movie> movieList = new ArrayList<Movie>();
 
         ListView listView_hist = (ListView) rootView.findViewById(R.id.list);
-        final CustomListAdapter adapter_hist = new CustomListAdapter(this.getActivity(), movieList);
+        final CustomListAdapter adapter_hist = new CustomListAdapter(this.getActivity(), movieList ,1);
         listView_hist.setAdapter(adapter_hist);
 
         // Creating volley request obj
@@ -117,12 +116,17 @@ public class HistoryFragment extends Fragment {
                         Log.d(TAG, response.toString());
                         //Log.d("INFOs:: WORKS", response.toString());
 
+                        //long temp = db_hist.getNrOfRows();
+                        //System.out.println("INFOs:: OUTPUT of ROWID " + temp +  "... -> HISTORY");
+                        //System.out.println("INFOs:: numBofRows " + numbOfRows + "... -> HISTORY");
+
                         // Parsing json
-                        for (int i = numbOfRows; i > 0; i--) {
+                        for (int i = (numbOfRows); i > 0; i--) {
                             try {
 
+                                // load previously saved values
                                 int return_temp = db_hist.loadConsumedProduct(i);
-                                //System.out.println("INFOs:: READING FROM consumption_history " + return_temp +  "... -> HISTORY");
+                                //System.out.println("INFOs:: READING FROM consumption_history " + return_temp +  " rowNumb " +i+ " ... -> HISTORY");
 
                                 JSONObject obj = response.getJSONObject(return_temp);
                                 Movie movie = new Movie();
@@ -156,7 +160,7 @@ public class HistoryFragment extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
                 VolleyLog.d(TAG, "Error: " + error.getMessage());
-                VolleyLog.d("INFOs:: ERROR", "Error: " + error.getMessage());
+                VolleyLog.d("INFOs:: ERROR HistoryFragment", "Error: " + error.getMessage());
 
             }
         });
@@ -164,6 +168,18 @@ public class HistoryFragment extends Fragment {
         // Adding request to request queue
         AppController.getInstance().addToRequestQueue(movieReq);
         hidePDialog();
+
+        // ====================== LIST VIEW CLICK INITIALISATION =======================
+        listView_hist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position,
+                                    long id) {
+
+                //System.out.println("INFOs:: ID for deletion is "+id+" minus "+numbOfRows+"...");
+                db_hist.deleteContact((int) (long) (numbOfRows-id));
+                db_hist.doTheVacuum();
+            }
+        });
 
         return rootView;
     }

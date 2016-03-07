@@ -32,7 +32,7 @@ public class BlankFragment extends Fragment{
 
     public BlankFragment() {
         // Required empty public constructor
-        System.out.println("INFOs:: CONSTRUCTOR..BlankFragment.");
+        //System.out.println("INFOs:: CONSTRUCTOR..BlankFragment.");
     }
 
     /**
@@ -45,7 +45,7 @@ public class BlankFragment extends Fragment{
      */
     // TODO: Rename and change types and number of parameters
     public static BlankFragment newInstance(String param1, String param2) {
-        System.out.println("INFOs:: NEW INSTANCE..BlankFragment.");
+        //System.out.println("INFOs:: NEW INSTANCE..BlankFragment.");
         BlankFragment fragment = new BlankFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
@@ -57,7 +57,7 @@ public class BlankFragment extends Fragment{
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
-        System.out.println("INFOs:: ON-CREATE.BlankFragment..");
+        //System.out.println("INFOs:: ON-CREATE.BlankFragment..");
         super.onCreate(savedInstanceState);
 
         // make this the default fragment
@@ -76,14 +76,14 @@ public class BlankFragment extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        System.out.println("INFOs:: ON-CREATE-VIEW BlankFragment...");
+        //System.out.println("INFOs:: ON-CREATE-VIEW BlankFragment...");
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.test_fragment, container, false);
     }
 
     @Override
     public void onAttach(Context context) {
-        System.out.println("INFOs:: ON-ATTACH...BlankFragment");
+        //System.out.println("INFOs:: ON-ATTACH...BlankFragment");
         super.onAttach(context);
 
         try {
@@ -96,7 +96,7 @@ public class BlankFragment extends Fragment{
 
     @Override
     public void onDetach() {
-        System.out.println("INFOs:: ON-DETACH...BlankFragment");
+        //System.out.println("INFOs:: ON-DETACH...BlankFragment");
         super.onDetach();
         mListener = null;
     }

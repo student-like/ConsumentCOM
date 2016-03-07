@@ -94,7 +94,7 @@ public class ConsumerFragment extends Fragment {
         final List<Movie> movieList = new ArrayList<Movie>();
 
         ListView listView = (ListView) rootView.findViewById(R.id.list);
-        final CustomListAdapter adapter = new CustomListAdapter(this.getActivity(), movieList);
+        final CustomListAdapter adapter = new CustomListAdapter(this.getActivity(), movieList, 0);
         listView.setAdapter(adapter);
 
         // Creating volley request obj
@@ -141,7 +141,7 @@ public class ConsumerFragment extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
                 VolleyLog.d(TAG, "Error: " + error.getMessage());
-                VolleyLog.d("INFOs:: ERROR", "Error: " + error.getMessage());
+                VolleyLog.d("INFOs:: ERROR ConsumerFragment", "Error: " + error.getMessage());
 
             }
         });
@@ -164,7 +164,6 @@ public class ConsumerFragment extends Fragment {
             System.out.println("INFOs:: new row created for today...");
 
             db.addDay(date); // create new table for today
-
             SaveLoadDayTime(1); // set today as last day used
         }
         else {
@@ -204,6 +203,7 @@ public class ConsumerFragment extends Fragment {
                 id_hist = db_hist.numberOfRows();
                 // add +1 to id_hist to put new value in new row
                 db_hist.addConsumption(id_hist + 1, dateTime, position); // incl time saved
+
             }
         });
 
@@ -244,9 +244,10 @@ public class ConsumerFragment extends Fragment {
 
         String[] parts = name.split(" ");
         date = parts[0]; // date without time !
+        //date = "2016-03-08";
 
-        //dateTime = "06032016";
         dateTime = name;
+        //dateTime = "2016-03-08 10:20:19";
 
         System.out.println("INFOs:: today is day " + date);
 

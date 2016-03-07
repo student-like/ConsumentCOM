@@ -64,29 +64,45 @@ public class DatabaseHandlerHistory extends SQLiteOpenHelper {
         db.close(); // Closing database connection
     }
 
-    public int deleteContact ()
+    public int deleteContact (int id)
     {
         SQLiteDatabase db = this.getWritableDatabase();
-        return db.delete(TABLE_CONSUMPTION_HISTORY,
-                DAY_TIME + "= ? ",
-                new String[]{Integer.toString(1)});
+        //System.out.println("INFOs:: deleting rowID " + (id) + "...");
+
+        return db.delete(TABLE_CONSUMPTION_HISTORY, "rowid" + "=" + (id), null);
     }
 
+    public void doTheVacuum()
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("VACUUM");
+    }
     // load one specific column value of today
     public int loadConsumedProduct(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
-
         int valueTemp = 0;
 
-        Cursor cursor = db.rawQuery("SELECT "+ PRODUCT +" FROM "+ TABLE_CONSUMPTION_HISTORY +" WHERE _id = ?",new String[] { Integer.toString(id) } ,null);
+        Cursor cursor = db.rawQuery("SELECT "+ PRODUCT +" FROM "+ TABLE_CONSUMPTION_HISTORY +" WHERE rowid = ?",new String[] { Integer.toString(id) } ,null);
 
-        // if cursor returns to be 0 ?
         if (cursor.moveToFirst()) {
             valueTemp = Integer.parseInt(cursor.getString(cursor.getColumnIndex(PRODUCT)));
         }
+
         cursor.close();
 
-        //System.out.println("INFOs:: consumed product is " + valueTemp +  "... -> HISTORY");
+        return valueTemp;
+    }
+
+    public long getNrOfRows()
+    {
+        SQLiteDatabase db = this.getReadableDatabase();
+        long valueTemp = 0;
+
+        Cursor cursor = db.rawQuery("SELECT ROWID from " +TABLE_CONSUMPTION_HISTORY+ " order by ROWID DESC limit 1", null);
+
+        if (cursor.moveToFirst()) {
+            valueTemp = cursor.getLong(0);
+        }
 
         return valueTemp;
     }

@@ -55,8 +55,7 @@ public class MainActivity extends AppCompatActivity implements BlankFragment.OnF
             public void onPageSelected(int position) {
 
                 // updating the page youre currently on
-                // THIS IS VERY BAD IMPLMENTED; since every time the screen changes back to HISTORY
-                // all screens are updated including checking dayTime, creating new table,
+                // THIS IS VERY BAD; screen should update after button click in screen 2
                 if (position == 0 )//|| position == 2)
                 {
                     //System.out.println("INFOs:: UPDATE onPAGE_LISTENER_ON position: " + position + "...");

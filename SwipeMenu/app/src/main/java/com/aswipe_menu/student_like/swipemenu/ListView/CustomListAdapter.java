@@ -2,6 +2,7 @@ package com.aswipe_menu.student_like.swipemenu.ListView;
 
 import android.app.Activity;
 import android.content.Context;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,12 +21,15 @@ public class CustomListAdapter extends BaseAdapter {
     private Activity activity;
     private LayoutInflater inflater;
     private List<Movie> movieItems;
+    // change title dependin on consumption or history
+    private int change_title;
 
     ImageLoader imageLoader = AppController.getInstance().getImageLoader();
 
-    public CustomListAdapter(Activity activity, List<Movie> movieItems) {
+    public CustomListAdapter(Activity activity, List<Movie> movieItems, int change_title) {
         this.activity = activity;
         this.movieItems = movieItems;
+        this.change_title = change_title;
     }
 
     @Override
@@ -49,14 +53,15 @@ public class CustomListAdapter extends BaseAdapter {
         if (inflater == null)
             inflater = (LayoutInflater) activity
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        if (convertView == null)
-            convertView = inflater.inflate(R.layout.list_row, null);
+
+        convertView = inflater.inflate(R.layout.list_row, null);
 
         if (imageLoader == null)
             imageLoader = AppController.getInstance().getImageLoader();
         NetworkImageView thumbNail = (NetworkImageView) convertView
                 .findViewById(R.id.thumbnail);
-        TextView title = (TextView) convertView.findViewById(R.id.title);
+
+        TextView title_todo = (TextView) convertView.findViewById(R.id.title);
         TextView rating = (TextView) convertView.findViewById(R.id.rating);
         TextView genre = (TextView) convertView.findViewById(R.id.genre);
         TextView year = (TextView) convertView.findViewById(R.id.releaseYear);
@@ -67,8 +72,14 @@ public class CustomListAdapter extends BaseAdapter {
         // thumbnail image
         thumbNail.setImageUrl(m.getThumbnailUrl(), imageLoader);
 
-        // title
-        title.setText(m.getTitle());
+        // change title depending on consumption or history
+        if (change_title == 0) {
+            title_todo.setText(m.getTitle());
+        }
+        else {
+            String text = "<font color=#C62828>remove </font>";
+            title_todo.setText(Html.fromHtml(text + m.getTitle()));
+        }
 
         // rating
         rating.setText("product: " + String.valueOf(m.getRating()));
