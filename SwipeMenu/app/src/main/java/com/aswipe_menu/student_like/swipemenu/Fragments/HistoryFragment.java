@@ -95,7 +95,7 @@ public class HistoryFragment extends Fragment {
 
         System.out.println("INFOs:: ON-CREATE-VIEW History...");
 
-        View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+        final View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
         // ---------------------- load HISTORY into array ---------------------
         final DatabaseHandlerHistory db_hist = new DatabaseHandlerHistory(this.getContext());
@@ -104,7 +104,7 @@ public class HistoryFragment extends Fragment {
         // ====================== LIST-VIEW INITIALISATION =======================
         final List<Movie> movieList = new ArrayList<Movie>();
 
-        ListView listView_hist = (ListView) rootView.findViewById(R.id.list);
+        final ListView listView_hist = (ListView) rootView.findViewById(R.id.list);
         final CustomListAdapter adapter_hist = new CustomListAdapter(this.getActivity(), movieList ,1);
         listView_hist.setAdapter(adapter_hist);
 
@@ -176,8 +176,10 @@ public class HistoryFragment extends Fragment {
                                     long id) {
 
                 //System.out.println("INFOs:: ID for deletion is "+id+" minus "+numbOfRows+"...");
-                db_hist.deleteContact((int) (long) (numbOfRows-id));
+                db_hist.deleteContact((int) (long) (numbOfRows - id));
                 db_hist.doTheVacuum();
+
+                HistoryFragment.newInstance(position);
             }
         });
 

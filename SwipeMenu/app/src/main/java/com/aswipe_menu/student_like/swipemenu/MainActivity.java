@@ -60,7 +60,6 @@ public class MainActivity extends AppCompatActivity implements BlankFragment.OnF
                 {
                     //System.out.println("INFOs:: UPDATE onPAGE_LISTENER_ON position: " + position + "...");
                     mViewPager.getAdapter().notifyDataSetChanged();
-
                 }
             }
 
