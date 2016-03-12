@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.aswipe_menu.student_like.simpletabtutorial.OneFragment">
+    tools:context=".Fragments.FragmentHistory">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView

@@ -2,20 +2,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.aswipe_menu.student_like.simpletabtutorial.OneFragment">
-
+    tools:context=".Fragments.FragmentConsume"
+    android:id="@+id/fragment_two_xml">
 
     <TextView
         android:id="@+id/fragment_two_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/two"
-        android:textSize="40dp"
+        android:textSize="25dp"
         android:textStyle="bold"
         android:layout_centerInParent="true"/>
 
     <ListView
-        android:id="@+id/fragment_two_list"
+        android:id="@+id/list"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
     </ListView>

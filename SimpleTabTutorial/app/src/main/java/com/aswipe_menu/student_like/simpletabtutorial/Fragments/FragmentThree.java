@@ -1,4 +1,4 @@
-package com.aswipe_menu.student_like.simpletabtutorial;
+package com.aswipe_menu.student_like.simpletabtutorial.Fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -6,10 +6,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.aswipe_menu.student_like.simpletabtutorial.R;
 
-public class ThreeFragment extends Fragment{
 
-    public ThreeFragment() {
+public class FragmentThree extends Fragment{
+
+    public FragmentThree() {
         // Required empty public constructor
     }
 
