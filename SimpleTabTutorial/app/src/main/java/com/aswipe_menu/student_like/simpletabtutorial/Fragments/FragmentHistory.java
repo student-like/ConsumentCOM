@@ -58,13 +58,13 @@ public class FragmentHistory extends Fragment{
         productAdapter_hist =
                 new ArrayAdapter<>(
                         getActivity(), // Die aktuelle Umgebung (diese Activity)
-                        R.layout.list_fragment ,// ID der XML-Layout Datei
-                        R.id.fragment_two_text_view, // ID des TextViews
+                        R.layout.history_fragment ,// ID der XML-Layout Datei
+                        R.id.fragment_one_text_view, // ID des TextViews
                         productList); // Beispieldaten in einer ArrayList
 
-        View rootView = inflater.inflate(R.layout.list_fragment, container, false);
+        View rootView = inflater.inflate(R.layout.history_fragment, container, false);
 
-        ListView productListView = (ListView) rootView.findViewById(R.id.list);
+        ListView productListView = (ListView) rootView.findViewById(R.id.list2);
         productListView.setAdapter(productAdapter_hist);
 
         // --------------  FILL ARRAY WITH HIST VALS --------------
@@ -115,15 +115,14 @@ public class FragmentHistory extends Fragment{
     // ============== FRAGMENT COMMUNICATION ==============
     public void updateTextField(String newText) {
 
-        ListView listView = (ListView) getActivity().findViewById(R.id.list);
+        ListView listView = (ListView) getActivity().findViewById(R.id.list2);
         listView.setAdapter(productAdapter_hist);
 
-        String temp_str = productAdapter_hist.getItem(1);
+        //String temp_str = productAdapter_hist.getItem(1);
 
         //Log.i(LOG_TAG, "infos: loading <<<< " + temp_str + " >>>>> TRANSMISSION <<< " + newText + " >>> rows...");
 
         productAdapter_hist.add("FIRST TETX");
-        productAdapter_hist.add("SEC TETX");
 
         productAdapter_hist.notifyDataSetChanged();
 
