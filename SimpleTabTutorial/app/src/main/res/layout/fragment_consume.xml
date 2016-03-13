@@ -2,11 +2,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Fragments.FragmentHistory"
-    android:id="@+id/fragment_two_xml">
+    tools:context=".Fragments.FragmentConsume"
+    android:id="@+id/fragment_consume_xml">
 
     <TextView
-        android:id="@+id/fragment_one_text_view"
+        android:id="@+id/fragment_consume_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="25dp"
@@ -14,7 +14,7 @@
         android:layout_centerInParent="true"/>
 
     <ListView
-        android:id="@+id/list2"
+        android:id="@+id/list"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
     </ListView>

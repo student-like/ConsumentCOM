@@ -1,8 +1,6 @@
 package com.aswipe_menu.student_like.simpletabtutorial.Fragments;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -14,9 +12,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.aswipe_menu.student_like.simpletabtutorial.DatabaseHandler;
-import com.aswipe_menu.student_like.simpletabtutorial.DatabaseHandlerHistory;
-import com.aswipe_menu.student_like.simpletabtutorial.MainActivity;
+import com.aswipe_menu.student_like.simpletabtutorial.Database.DatabaseHandler;
+import com.aswipe_menu.student_like.simpletabtutorial.Database.DatabaseHandlerHistory;
 import com.aswipe_menu.student_like.simpletabtutorial.R;
 
 import java.text.SimpleDateFormat;
@@ -31,6 +28,9 @@ import java.util.Locale;
  */
 public class FragmentConsume extends Fragment {
 
+    // ====================== LOG output DEFINITIONS =======================
+    String LOG_TAG = FragmentConsume.class.getSimpleName();
+
     private OnFragmentInteractionListener mListener;
 
     // ====================== DATA-BASE DEFINITIONS =======================
@@ -40,8 +40,8 @@ public class FragmentConsume extends Fragment {
     double amount;
     String choice;
     double prevCons[] = new double [6];
-    double consAmount[] = new double [] {0.5, 0.33, 1, 1, 1, 0.125};
-    String articles[] = {"bier", "bier", "wein", "ofen", "ziga", "shot"};
+    double consAmount[] = new double [] {0.5, 0.33, 0.25, 1, 1, 0.125};
+    String articles[] = {"Bier", "Bier", "Wein", "Ofen", "Ziga", "Shot"};
 
     String dateTime;
     String date;
@@ -49,29 +49,28 @@ public class FragmentConsume extends Fragment {
     // ----------------------- HISTORY DATA-BASE -------------------------
     int id_hist; // only for HISTORY
 
-    // ====================== LOG output DEFINITIONS =======================
-    String LOG_TAG = FragmentConsume.class.getSimpleName();
-
     public FragmentConsume() {
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              final Bundle savedInstanceState) {
+        Log.i(LOG_TAG, "infos: ---------- START --------- CONSUME ----------");
 
         final DatabaseHandler db = new DatabaseHandler(this.getContext());
         final DatabaseHandlerHistory db_hist = new DatabaseHandlerHistory(this.getContext());
+
         getDayTime(); // dateTime = date of today
 
         // --------------  create basic DATABASE --------------
         Log.i(LOG_TAG, "infos: basic array definition...");
-        String [] produkteArray = {
+        String [] consumedProducts = {
                 "Bier 0.5",
                 "Bier 0.33",
-                "Wein 1/8",
-                "Ofen 1x",
-                "Ziga 1x",
-                "Shot 1x"
+                "Wein 0.25",
+                "Ofen 1",
+                "Ziga 1",
+                "Shot 0.125"
         };
 
         // check if today already exist, else create new row with curr. day
@@ -92,18 +91,18 @@ public class FragmentConsume extends Fragment {
             SaveLoadDayTime(1); // set today as last day used
         }
 
-        List <String> productList = new ArrayList<>(Arrays.asList(produkteArray));
+        List <String> productList = new ArrayList<>(Arrays.asList(consumedProducts));
 
         // --------------  ADAPTER  STUFF --------------
         final ArrayAdapter <String> productAdapter =
                 new ArrayAdapter<>(
                         getActivity(), // Die aktuelle Umgebung (diese Activity)
-                        R.layout.list_fragment ,// ID der XML-Layout Datei
-                        R.id.fragment_two_text_view, // ID des TextViews
+                        R.layout.fragment_consume,// ID der XML-Layout Datei
+                        R.id.fragment_consume_text_view, // ID des TextViews
                         productList); // Beispieldaten in einer ArrayList
 
 
-        View rootView = inflater.inflate(R.layout.list_fragment, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_consume, container, false);
 
         ListView productListView = (ListView) rootView.findViewById(R.id.list);
         productListView.setAdapter(productAdapter);
@@ -113,6 +112,8 @@ public class FragmentConsume extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position,
                                     long id) {
+                // update current date-Time + milliseconds and all
+                getDayTime();
 
                 // ======================== adding a product ==========================
                 amount = consAmount[position]; // year is amount
@@ -125,12 +126,11 @@ public class FragmentConsume extends Fragment {
                 // ------------------ adding infromation to CONS_HISTORY table ---------------------
                 // update id_hist -> length of db_hist table
                 id_hist = db_hist.numberOfRows();
-                // add +1 to id_hist to put new value in new row
-                db_hist.addConsumption(id_hist + 1, dateTime, position); // incl time saved
+                db_hist.addConsumption(dateTime, position); // incl time saved
 
                 // ------------------ update FRAGMENT-HISTORY -----------------------------
                 if (mListener != null) {
-                    mListener.onFragmentInteraction("ÜBERTRAGUNG");
+                    mListener.onFragmentInteraction(articles[position] + " " + amount + " L + " + position + " with id, " + dateTime);
                 }
             }
         });
@@ -168,29 +168,31 @@ public class FragmentConsume extends Fragment {
     public String getDayTime()
     {
         // time and date definitions
-        Date now = new Date();
-        String name = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.GERMAN).format(now);
+        SimpleDateFormat name = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", Locale.getDefault());
+        // convert SimpleDateFormat -> String
+        String conv_date = name.format(new Date());
 
-        String[] parts = name.split(" ");
-        date = parts[0]; // date without time !
+        String[] parts = conv_date.split(" ");
+        date = parts[0];
         //date = "2016-03-08";
 
-        dateTime = name;
-        //dateTime = "2016-03-08 10:20:19";
+        dateTime = conv_date;
+        //dateTime = "2016-03-08 10:20:19.945";
 
-        System.out.println("INFOs:: today is day " + date);
+        //System.out.println("INFOs:: updating dateTime " + date);
 
-        return name;
+        return conv_date;
     }
 
     // ======================= FRAGMENT COMMUNICATION ======================
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
         try {
-            mListener = (OnFragmentInteractionListener) activity;
+            mListener = (OnFragmentInteractionListener) context;
         } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString() + " must implement OnFragmentInteractionListener");
+            throw new ClassCastException(context.toString() + " must implement OnFragmentInteractionListener");
         }
     }
 

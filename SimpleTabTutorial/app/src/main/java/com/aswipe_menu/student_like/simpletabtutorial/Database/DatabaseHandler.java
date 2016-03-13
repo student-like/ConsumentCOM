@@ -1,4 +1,4 @@
-package com.aswipe_menu.student_like.simpletabtutorial;
+package com.aswipe_menu.student_like.simpletabtutorial.Database;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -8,6 +8,9 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 public class DatabaseHandler extends SQLiteOpenHelper {
+
+    // ====================== LOG output DEFINITIONS =======================
+    String LOG_TAG = DatabaseHandler.class.getSimpleName();
 
     // All Static variables
     // Database Version
@@ -22,14 +25,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     // Contacts Table Columns names
     private static final String DAY_TIME = "dayTime";
     // CONSUMPTION columns
-    private static final String BIER = "bier";
-    private static final String WEIN = "wein";
-    private static final String OFEN = "ofen";
-    private static final String ZIGA = "ziga";
-    private static final String SHOT = "shot";
-
-    // ====================== LOG output DEFINITIONS =======================
-    String LOG_TAG = DatabaseHandler.class.getSimpleName();
+    private static final String BIER = "Bier";
+    private static final String WEIN = "Wein";
+    private static final String OFEN = "Ofen";
+    private static final String ZIGA = "Ziga";
+    private static final String SHOT = "Shot";
 
     public DatabaseHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -83,7 +83,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 
-        Log.i(LOG_TAG, "infos:  updating " + id + ", " + AddedVal + ", " + choice + " ...");
+        Log.i(LOG_TAG, "infos: updating " + id + ", " + AddedVal + ", " + choice + " ...");
 
         values.put(choice, AddedVal);
 
@@ -92,12 +92,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 new String[] {id});
     }
 
-    public int deleteContact ()
-    {
+    public void deleteContact (String id) {
         SQLiteDatabase db = this.getWritableDatabase();
-        return db.delete(TABLE_CONSUMPTION,
-                DAY_TIME + "= ? ",
-                new String[]{Integer.toString(1)});
+
+        //Log.i(LOG_TAG, "infos: deleting where " + id + " ...");
+
+        db.delete(TABLE_CONSUMPTION,DAY_TIME + "= ? ",new String[]{Integer.toString(1)});
     }
 
     // load one specific column value of today

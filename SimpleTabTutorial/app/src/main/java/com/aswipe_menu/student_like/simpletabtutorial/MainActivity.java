@@ -1,6 +1,5 @@
 package com.aswipe_menu.student_like.simpletabtutorial;
 
-import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -10,9 +9,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.ListView;
 
 import com.aswipe_menu.student_like.simpletabtutorial.Fragments.FragmentHistory;
 import com.aswipe_menu.student_like.simpletabtutorial.Fragments.FragmentThree;
@@ -25,7 +21,9 @@ public class MainActivity extends AppCompatActivity implements FragmentConsume.O
 
     private ViewPager mViewPager;
     // LOG OUTPUT
-    String LOG_TAG = FragmentConsume.class.getSimpleName();
+    String LOG_TAG = MainActivity.class.getSimpleName();
+
+    FragmentHistory global_hist = new FragmentHistory();
 
     // ============== INITIALISATION OF MAIN ==============
     @Override
@@ -58,16 +56,22 @@ public class MainActivity extends AppCompatActivity implements FragmentConsume.O
     // ============== FRAGMENT COMMUNICATION ==============
     @Override
     public void onFragmentInteraction(String userContent) {
-        FragmentHistory secondFragment =
-                (FragmentHistory)getSupportFragmentManager().findFragmentById(R.id.fragmentA);
 
-        secondFragment.updateTextField(userContent);
+        //Log.i(LOG_TAG, "infos: receving '" + userContent + "' from FragmentConsumption...");
+
+       /* FragmentHistory secondFragment =
+                (FragmentHistory) getSupportFragmentManager().findFragmentById(R.id.fragmentA);
+
+        secondFragment.updateTextField(userContent);*/
+
+        global_hist.updateTextField(userContent);
     }
 
     private void setupViewPager(ViewPager viewPager) {
+
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
 
-        adapter.addFragment(new FragmentHistory(), "HISTORY");
+        adapter.addFragment(global_hist, "HISTORY");
         adapter.addFragment(new FragmentConsume(), "CONSUME");
         adapter.addFragment(new FragmentThree(), "STATIST");
 
@@ -76,6 +80,7 @@ public class MainActivity extends AppCompatActivity implements FragmentConsume.O
 
 
     class ViewPagerAdapter extends FragmentPagerAdapter {
+
         private final List<Fragment> mFragmentList = new ArrayList<>();
         private final List<String> mFragmentTitleList = new ArrayList<>();
 
