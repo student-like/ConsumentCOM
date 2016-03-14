@@ -1,0 +1,7 @@
+<resources>
+
+    <string name="app_name">SimpleTabTutorial</string>
+
+    <string name="fragment_history">HISTORY</string>
+
+</resources>

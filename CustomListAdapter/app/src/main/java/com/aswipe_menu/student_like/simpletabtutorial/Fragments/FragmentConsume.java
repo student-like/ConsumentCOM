@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,10 +13,13 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.aswipe_menu.student_like.simpletabtutorial.CustomListAdapter;
 import com.aswipe_menu.student_like.simpletabtutorial.Database.DatabaseHandler;
 import com.aswipe_menu.student_like.simpletabtutorial.Database.DatabaseHandlerHistory;
 import com.aswipe_menu.student_like.simpletabtutorial.Product;
 import com.aswipe_menu.student_like.simpletabtutorial.R;
+
+import org.json.JSONArray;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -84,24 +88,31 @@ public class FragmentConsume extends Fragment {
 
         // get product ARRAY from Product.java
         Product product = new Product();
+
+        List <Product> productListWoa = new ArrayList<Product>();
         List <String> productList = product.getProductList();
 
-        // --------------  ADAPTER  STUFF --------------
-        final ArrayAdapter <String> productAdapter =
-                new ArrayAdapter<>(
-                        getActivity(), // Die aktuelle Umgebung (diese Activity)
-                        R.layout.fragment_consume,// ID der XML-Layout Datei
-                        R.id.fragment_consume_text_view, // ID des TextViews
-                        productList); // Beispieldaten in einer ArrayList
+        final CustomListAdapter adapter = new CustomListAdapter(this.getActivity(), productListWoa, 0);
 
-        final CustomListAdapter adapter = new CustomListAdapter(this.getActivity(), movieList, 0);
+        // get size of productList and fill listView with existing Products
+        for (int i = 0; i < productList.size(); i++) {
 
+            Product product2 = new Product();
+
+            product2.setTitle(productList.get(i));
+            product2.setThumbnailUrl("image");
+            product2.setRating(0);
+            product2.setYear(0);
+
+            // adding movie to movies array
+            productListWoa.add(product2);
+        }
+        adapter.notifyDataSetChanged();
 
         View rootView = inflater.inflate(R.layout.fragment_consume, container, false);
-
         ListView productListView = (ListView) rootView.findViewById(R.id.list);
 
-        productListView.setAdapter(productAdapter);
+        productListView.setAdapter(adapter);
 
         // ------------------------ ON ITEM CLICK  ----------------------------
         productListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

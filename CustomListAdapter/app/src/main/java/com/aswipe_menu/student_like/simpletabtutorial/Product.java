@@ -13,6 +13,14 @@ public class Product {
             "Ziga 1",
             "Shot 0.125"));
 
+    private List<String> thumbNailArr = new ArrayList<String>(Arrays.asList(
+            "img_beer05",
+            "img_beer05",
+            "img_wine18",
+            "img_cigarespc",
+            "img_cigarette",
+            "img_shot"));
+
     private String title, thumbnailUrl;
     private double year;
     private int rating;
@@ -49,8 +57,8 @@ public class Product {
         this.title = name;
     }
 
-    public String getThumbnailUrl() {
-        return thumbnailUrl;
+    public String getThumbnail(int position) {
+        return thumbNailArr.get(position);
     }
 
     public void setThumbnailUrl(String thumbnailUrl) {

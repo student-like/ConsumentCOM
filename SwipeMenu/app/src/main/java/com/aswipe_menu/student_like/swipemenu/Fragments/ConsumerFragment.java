@@ -94,7 +94,9 @@ public class ConsumerFragment extends Fragment {
         final List<Movie> movieList = new ArrayList<Movie>();
 
         ListView listView = (ListView) rootView.findViewById(R.id.list);
+
         final CustomListAdapter adapter = new CustomListAdapter(this.getActivity(), movieList, 0);
+
         listView.setAdapter(adapter);
 
         // Creating volley request obj
