@@ -12,6 +12,7 @@ import android.widget.ListView;
 
 import com.aswipe_menu.student_like.simpletabtutorial.Database.DatabaseHandler;
 import com.aswipe_menu.student_like.simpletabtutorial.Database.DatabaseHandlerHistory;
+import com.aswipe_menu.student_like.simpletabtutorial.Product;
 import com.aswipe_menu.student_like.simpletabtutorial.R;
 
 import java.util.ArrayList;
@@ -26,16 +27,6 @@ public class FragmentHistory extends Fragment{
 
     // ====================== FragmentHistory DEFINITIONS =======================
     String [] produkteArray = {};
-    String [] consumedProducts = {
-            "Bier 0.5",
-            "Bier 0.33",
-            "Wein 0.25",
-            "Ofen 1",
-            "Ziga 1",
-            "Shot 0.125"
-    };
-
-    // ====================== ADAPTER DEFINITIONS =======================
     ArrayAdapter<String> productAdapter_hist;
 
     // =================== INITIALISATION OF MAIN ==================
@@ -49,6 +40,10 @@ public class FragmentHistory extends Fragment{
 
         final DatabaseHandlerHistory db_hist = new DatabaseHandlerHistory(this.getContext());
         final DatabaseHandler db = new DatabaseHandler(this.getContext());
+
+        // get product ARRAY from Product.java
+        Product product = new Product();
+        List <String> consumedProducts = product.getProductList();
 
         // --------------  create EMPTY LIST --------------
         List<String> productList = new ArrayList<>(Arrays.asList(produkteArray));
@@ -85,11 +80,12 @@ public class FragmentHistory extends Fragment{
                 temp_rowID = db_hist.loadConsumedProduct2(i);
                 Log.i(LOG_TAG, "infos: loading file with rowID '" + temp_rowID + "'...");
 
-                productAdapter_hist.add(consumedProducts[Integer.parseInt(temp_prod)] + " L + " + temp_prod + " with id, " + temp_dayTime);
+                // TODO invert array display list in HISTORY
+                productAdapter_hist.add(consumedProducts.get(Integer.parseInt(temp_prod)) + " L + " + temp_prod + " with id, " + temp_dayTime);
               }
         }
 
-        // -------------- ON ITEM CLICK  --------------
+        // ----------------------- ON ITEM CLICK  -----------------------------
         productListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position,

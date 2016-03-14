@@ -65,14 +65,6 @@ public class FragmentConsume extends Fragment {
 
         // --------------  create basic DATABASE --------------
         Log.i(LOG_TAG, "infos: basic array definition...");
-        String [] consumedProducts = {
-                "Bier 0.5",
-                "Bier 0.33",
-                "Wein 0.25",
-                "Ofen 1",
-                "Ziga 1",
-                "Shot 0.125"
-        };
 
         // check if today already exist, else create new row with curr. day
         final String readTemp = SaveLoadDayTime(0);
@@ -92,9 +84,9 @@ public class FragmentConsume extends Fragment {
             SaveLoadDayTime(1); // set today as last day used
         }
 
-        List <Product> movieList = new ArrayList<Product>();
-
-        List <String> productList = new ArrayList<>(Arrays.asList(consumedProducts));
+        // get product ARRAY from Product.java
+        Product product = new Product();
+        List <String> productList = product.getProductList();
 
         // --------------  ADAPTER  STUFF --------------
         final ArrayAdapter <String> productAdapter =
