@@ -188,12 +188,6 @@ public class ConsumerFragment extends Fragment {
                 amount = movie.getYear(); // year is amount
                 choice = movie.getRating(); // rating = product position
 
-                // String u = Integer.toString(choice);
-                //Log.d("INFOs:: product", u);
-
-                //String output = Double.toString(amount);
-                //Log.d("INFOs:: amount2", output);
-
                 // ------------------- adding infromation to CONSUMPTION table ---------------------
                 consArray[choice + 1] = consArray[choice + 1] + amount;
                 db.updateContact(date, consArray[choice + 1], articles[choice]);

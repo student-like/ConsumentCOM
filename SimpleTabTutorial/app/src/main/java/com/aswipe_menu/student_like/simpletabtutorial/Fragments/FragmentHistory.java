@@ -21,8 +21,6 @@ import java.util.List;
 
 public class FragmentHistory extends Fragment{
 
-    double prevCons[] = new double [6];
-
     // ====================== LOG output DEFINITIONS =======================
     String LOG_TAG = FragmentConsume.class.getSimpleName();
 
@@ -97,20 +95,22 @@ public class FragmentHistory extends Fragment{
             public void onItemClick(AdapterView<?> parent, View view, int position,
                                     long id) {
 
+                double prevConsumed;
+
                 // ================ delete product in  database ================
                 String temp_str = productAdapter_hist.getItem(position);
 
                 // ---------------- delete in CONSUME database -------------------
                 String[] separated_cons = temp_str.split(" ");
 
-                Log.i(LOG_TAG, "infos: CONSUM loading product '" + separated_cons[0] + "' where date '"+separated_cons[7]+"' and amount '"+separated_cons[1]+"' ...");
-                prevCons[position] = db.loadVal(separated_cons[7], separated_cons[0]);
+                Log.i(LOG_TAG, "infos: CONSUM loading dateTime '" + separated_cons[7] + "' where choice '"+separated_cons[0]+"' and amount '"+separated_cons[1]+"' ...");
+                prevConsumed = db.loadVal(separated_cons[7], separated_cons[0]);
 
                 // separated_cons[0] = product
                 // separated_cons[1] = amount
                 // separated_cons[7] = date
 
-                db.updateContact(separated_cons[7], (prevCons[position] - Double.parseDouble(separated_cons[1])), separated_cons[0]);
+                db.updateContact(separated_cons[7], (prevConsumed - Double.parseDouble(separated_cons[1])), separated_cons[0]);
 
                 // ---------------- delete in HISTOY database -------------------
                 String[] separated_hist = temp_str.split(",");

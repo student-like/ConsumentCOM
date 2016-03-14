@@ -14,6 +14,7 @@ import android.widget.ListView;
 
 import com.aswipe_menu.student_like.simpletabtutorial.Database.DatabaseHandler;
 import com.aswipe_menu.student_like.simpletabtutorial.Database.DatabaseHandlerHistory;
+import com.aswipe_menu.student_like.simpletabtutorial.Product;
 import com.aswipe_menu.student_like.simpletabtutorial.R;
 
 import java.text.SimpleDateFormat;
@@ -90,6 +91,8 @@ public class FragmentConsume extends Fragment {
             }
             SaveLoadDayTime(1); // set today as last day used
         }
+
+        List <Product> movieList = new ArrayList<Product>();
 
         List <String> productList = new ArrayList<>(Arrays.asList(consumedProducts));
 

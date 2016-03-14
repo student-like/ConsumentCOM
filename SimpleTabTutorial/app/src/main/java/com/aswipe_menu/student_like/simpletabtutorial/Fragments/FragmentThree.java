@@ -29,7 +29,7 @@ public class FragmentThree extends Fragment{
         Log.i(LOG_TAG, "infos: ---------- START --------- THREE ----------");
 
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_three, container, false);
+        return null;
     }
 
 }

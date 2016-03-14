@@ -100,6 +100,7 @@ public class DatabaseHandlerHistory extends SQLiteOpenHelper {
         return valueTemp;
     }
 
+    // REMOVE ONE OF THEM ??
     public long getNrOfRows()
     {
         SQLiteDatabase db = this.getReadableDatabase();
@@ -114,12 +115,12 @@ public class DatabaseHandlerHistory extends SQLiteOpenHelper {
         return valueTemp;
     }
 
-    /*public int numberOfRows(){
+    public int numberOfRows(){
         SQLiteDatabase db = this.getReadableDatabase();
         int numRows = (int) DatabaseUtils.queryNumEntries(db, TABLE_CONSUMPTION_HISTORY);
 
         return numRows;
-    }*/
+    }
 
     public void doTheVacuum()
     {
