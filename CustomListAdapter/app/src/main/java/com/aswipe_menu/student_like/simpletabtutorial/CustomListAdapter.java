@@ -75,7 +75,6 @@ public class CustomListAdapter extends BaseAdapter {
 
         //Drawable res = activity.getResources().getDrawable(imageResource);
         Drawable res = ResourcesCompat.getDrawable(activity.getResources(), imageResource, null);
-
         thumbnail.setImageDrawable(res);
 
         // change title depending on consumption or history

@@ -53,12 +53,6 @@ public class MainActivity extends AppCompatActivity implements FragmentConsume.O
         mViewPager.setOffscreenPageLimit(3);
     }
 
-    // ============== FRAGMENT COMMUNICATION ==============
-    @Override
-    public void onFragmentInteraction(String userContent) {
-        global_hist.updateTextField(userContent);
-    }
-
     private void setupViewPager(ViewPager viewPager) {
 
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
@@ -99,5 +93,11 @@ public class MainActivity extends AppCompatActivity implements FragmentConsume.O
         public CharSequence getPageTitle(int position) {
             return mFragmentTitleList.get(position);
         }
+    }
+
+    // ============== FRAGMENT COMMUNICATION ==============
+    @Override
+    public void onFragmentInteraction(String userContent) {
+        global_hist.updateTextField(userContent);
     }
 }

@@ -21,9 +21,7 @@
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
             app:layout_scrollFlags="scroll|enterAlways"
-            app:theme="@style/ThemeOverlay.AppCompat.ActionBar">
-
-        </android.support.v7.widget.Toolbar>
+            app:theme="@style/ThemeOverlay.AppCompat.ActionBar"/>
 
         <android.support.design.widget.TabLayout
             android:id="@+id/tabs"
@@ -38,7 +36,7 @@
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="55dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+    <!-- layout_behavior triggering events in toolbar & tablayout  -->
 
 </android.support.design.widget.CoordinatorLayout>

@@ -1,10 +1,14 @@
 package com.aswipe_menu.student_like.simpletabtutorial;
 
+import android.app.Activity;
+import android.graphics.drawable.Drawable;
+import android.support.v4.content.res.ResourcesCompat;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class Product {
+public class Product{
     private List<String> consumedProducts = new ArrayList<String>(Arrays.asList(
             "Bier 0.5",
             "Bier 0.33",
@@ -32,6 +36,7 @@ public class Product {
     // variables to which you can access from outside
     public Product(String name, String thumbnailUrl, List<String> consumedProducts, double year, int rating,
                    ArrayList<String> genre) {
+
         this.consumedProducts = consumedProducts;
 
         this.title = name;
@@ -43,6 +48,19 @@ public class Product {
 
     public void addProductList(String string2add){
         consumedProducts.add(consumedProducts.size()+1, string2add);
+    }
+
+    public Drawable getContentDrawable(Activity activity, int position){
+
+        String temp_imageToGet = getThumbnail(0); // CHANGE BACK TO position
+        String uri = "@drawable/" + temp_imageToGet;
+
+        int imageResource = activity.getResources().getIdentifier(uri, null, MainActivity.class.getPackage().getName());
+
+        //Drawable res = ResourcesCompat.getDrawable(activity.getResources(), imageResource, null);
+        // return res;
+
+        return ResourcesCompat.getDrawable(activity.getResources(), imageResource, null);
     }
 
     public List<String> getProductList(){
