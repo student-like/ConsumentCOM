@@ -1,5 +1,6 @@
 package com.aswipe_menu.student_like.simpletabtutorial.Database;
 
+import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -97,7 +98,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         //Log.i(LOG_TAG, "infos: deleting where " + id + " ...");
 
-        db.delete(TABLE_CONSUMPTION,DAY_TIME + "= ? ",new String[]{Integer.toString(1)});
+        //db.delete(TABLE_CONSUMPTION,DAY_TIME + "= ? ",new String[]{Integer.toString(1)});
     }
 
     // load one specific column value of today

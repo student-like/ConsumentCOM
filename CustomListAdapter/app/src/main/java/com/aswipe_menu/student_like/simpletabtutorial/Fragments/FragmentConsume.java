@@ -1,7 +1,7 @@
 package com.aswipe_menu.student_like.simpletabtutorial.Fragments;
 
+import android.app.Activity;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,11 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 
-import com.aswipe_menu.student_like.simpletabtutorial.CustomListAdapter;
 import com.aswipe_menu.student_like.simpletabtutorial.Database.DatabaseHandler;
 import com.aswipe_menu.student_like.simpletabtutorial.Database.DatabaseHandlerHistory;
 import com.aswipe_menu.student_like.simpletabtutorial.DayTime.GetDayTime;
@@ -22,14 +18,8 @@ import com.aswipe_menu.student_like.simpletabtutorial.Product;
 import com.aswipe_menu.student_like.simpletabtutorial.R;
 import com.aswipe_menu.student_like.simpletabtutorial.RecyclerViewAdapter;
 
-import org.json.JSONArray;
-
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -38,18 +28,19 @@ public class FragmentConsume extends Fragment {
 
     String LOG_TAG = FragmentConsume.class.getSimpleName();
 
-    private OnFragmentInteractionListener mListener;
+    // ----------------------- HISTORY DATA-BASE -------------------------
+    int id_hist; // only for HISTORY
+
+    // ----------------------- LOCAL DEFINITIONS -------------------------
+    private OnFragmentInteractionListener inti_mListener;
 
     double amount;
     double prevCons[] = new double [6];
     double consAmount[] = new double [] {0.5, 0.33, 0.25, 1, 1, 0.125};
     String articles[] = {"Bier", "Bier", "Wein", "Ofen", "Ziga", "Shot"};
 
-    String dateTime;
-    String date;
+    //Context context;
 
-    // ----------------------- HISTORY DATA-BASE -------------------------
-    int id_hist; // only for HISTORY
 
     public FragmentConsume() {
     }
@@ -59,13 +50,20 @@ public class FragmentConsume extends Fragment {
                              final Bundle savedInstanceState) {
         Log.i(LOG_TAG, "infos: ---------- START --------- CONSUME ----------");
 
-        final DatabaseHandler db = new DatabaseHandler(this.getContext());
-        final DatabaseHandlerHistory db_hist = new DatabaseHandlerHistory(this.getContext());
+        /*if (context == null){
+            Log.i(LOG_TAG, "infos: OnCreate - context is null");
+        }*/
+        if (getActivity() == null){
+            Log.i(LOG_TAG, "infos: OnCreate - getActivity is null");
+        }
 
-        final GetDayTime getTime = new GetDayTime(getActivity());
+        // first declare DatabaseHandlers here to be able to getConetxt()
+        DatabaseHandler db = new DatabaseHandler(getActivity());
 
-        // get date !
-        date = getTime.getDayTime(0);
+        GetDayTime getTime = new GetDayTime(getActivity());
+
+        // TODO send date & dateTime in array
+        String date = getTime.getDayTime(0);
 
         // --------------  create basic DATABASE --------------
         Log.i(LOG_TAG, "infos: basic array definition...");
@@ -127,48 +125,89 @@ public class FragmentConsume extends Fragment {
         // set LayoutManager otherwise error...
         productListView.setLayoutManager(new LinearLayoutManager(getContext()));
 
+        // TODO: getActivity and mListener have to be passed on to RecycleViewAdapter to then come back to the click Action function
         // sending data incl Activity to access to img files in drawable and receiving new adapter
-        RecyclerViewAdapter setNewAdapter = new RecyclerViewAdapter(this.getActivity(), productListWoa);
+        RecyclerViewAdapter setNewAdapter = new RecyclerViewAdapter(this.getActivity(), productListWoa, inti_mListener);
 
         productListView.setAdapter(setNewAdapter);
-
 
         /*// ------------------------ ON ITEM CLICK  ----------------------------
         productListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position,
                                     long id) {
-                // update current date-Time + milliseconds and all
-                getDayTime();
-
-                amount = consAmount[position]; // year is amount
-
-                // ------------------- adding infromation to CONSUMPTION table ---------------------
-                prevCons[position] = db.loadVal(date, articles[position]);
-                db.updateContact(date, prevCons[position] + amount, articles[position]);
-
-                // ------------------ adding infromation to CONS_HISTORY table ---------------------
-                // update id_hist -> length of db_hist table
-                id_hist = db_hist.numberOfRows();
-                db_hist.addConsumption(dateTime, position); // incl time saved
-
-                // ------------------ update FRAGMENT-HISTORY -----------------------------
-                if (mListener != null) {
-                    mListener.onFragmentInteraction(articles[position] + " " + amount + " L + " + position + " with id, " + dateTime);
                 }
-            }
-        });*/
+
+            });*/
 
         return rootView;
+    }
+
+    public void clickAction (int position, Activity activityImp, OnFragmentInteractionListener mListener){
+        // ------------------------ ON ITEM CLICK  ----------------------------
+
+        GetDayTime getTime = new GetDayTime(getActivity());
+
+        DatabaseHandler db = new DatabaseHandler(activityImp);
+        DatabaseHandlerHistory db_hist = new DatabaseHandlerHistory(activityImp);
+
+        /*if (getActivity() == null){
+            Log.i(LOG_TAG, "infos: activity is null");
+        }
+        if (activityImp == null){
+            Log.i(LOG_TAG, "infos: activityImp ! is null");
+        }
+        if (this.getActivity() == null){
+            Log.i(LOG_TAG, "infos: this.getACtivity is null");
+        }*/
+
+        String date = getTime.getDayTime(0);
+        String dateTime = getTime.getDayTime(1);
+
+       /* db.updateContact("2016-03-16", 55, "Bier");
+
+        Log.i(LOG_TAG, "infos: articles position is " + articles[position]);
+        Log.i(LOG_TAG, "infos: loaded date is "+ date);
+
+        double temp_load = db.loadVal("2016-03-16", "Bier");
+        temp_load = db.loadVal(date, articles[position]);*/
+
+        //Log.i(LOG_TAG, "infos: position is "+ position);
+
+
+        // update current date-Time + milliseconds and all
+       // Log.i(LOG_TAG, "infos: get dayTime " + dateTime + "...");
+        //Log.i(LOG_TAG, "infos: get date " + date + "...");
+
+        // ------------------- adding infromation to CONSUMPTION table ---------------------
+        prevCons[position] = db.loadVal(date, articles[position]);
+        db.updateContact(date, prevCons[position] + amount, articles[position]);
+
+        // ------------------ adding infromation to CONS_HISTORY table ---------------------
+        amount = consAmount[position]; // year is amount
+
+        // ------------------ adding infromation to CONS_HISTORY table ---------------------
+        // update id_hist -> length of db_hist table
+        id_hist = db_hist.numberOfRows();
+        db_hist.addConsumption(dateTime, position); // incl time saved
+
+        // ------------------ update FRAGMENT-HISTORY -----------------------------
+        if (mListener != null) {
+            Log.i(LOG_TAG, "infos: adding 1  to history ListView...");
+
+            mListener.onFragmentInteraction(articles[position] + " " + amount + " L + " + position + " with id, " + dateTime);
+        }
     }
 
     // ======================= FRAGMENT COMMUNICATION ======================
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        Log.i(LOG_TAG, "infos: ATTACH...");
 
         try {
-            mListener = (OnFragmentInteractionListener) context;
+            Log.i(LOG_TAG, "infos: ATTACHATTACHATTACHATTACHATTACH...");
+            inti_mListener = (OnFragmentInteractionListener) context;
         } catch (ClassCastException e) {
             throw new ClassCastException(context.toString() + " must implement OnFragmentInteractionListener");
         }
@@ -176,8 +215,10 @@ public class FragmentConsume extends Fragment {
 
     @Override
     public void onDetach() {
+        Log.i(LOG_TAG, "infos: DEATTACH...");
+
         super.onDetach();
-        mListener = null;
+        inti_mListener = null;
     }
 
     public interface OnFragmentInteractionListener {

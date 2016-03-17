@@ -37,8 +37,8 @@ public class FragmentHistory extends Fragment{
 
         Log.i(LOG_TAG, "infos: ---------- START --------- HISTORY ----------");
 
-        final DatabaseHandlerHistory db_hist = new DatabaseHandlerHistory(this.getContext());
-        final DatabaseHandler db = new DatabaseHandler(this.getContext());
+        final DatabaseHandlerHistory db_hist = new DatabaseHandlerHistory(getActivity());
+        final DatabaseHandler db = new DatabaseHandler(getActivity());
 
         // get product ARRAY from Product.java
         Product product = new Product();
@@ -132,7 +132,7 @@ public class FragmentHistory extends Fragment{
         ListView listView = (ListView) getActivity().findViewById(R.id.list2);
         listView.setAdapter(productAdapter_hist);
 
-        //Log.i(LOG_TAG, "infos: adding '" + newText + "' to history ListView...");
+        Log.i(LOG_TAG, "infos: adding '" + newText + "' to history ListView...");
 
         productAdapter_hist.insert(newText, 0);
         productAdapter_hist.notifyDataSetChanged();

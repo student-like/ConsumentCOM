@@ -1,5 +1,6 @@
 package com.aswipe_menu.student_like.simpletabtutorial;
 
+import android.app.Activity;
 import android.graphics.Color;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +11,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.aswipe_menu.student_like.simpletabtutorial.Fragments.FragmentHistory;
 import com.aswipe_menu.student_like.simpletabtutorial.Fragments.FragmentThree;
@@ -62,42 +64,44 @@ public class MainActivity extends AppCompatActivity implements FragmentConsume.O
         adapter.addFragment(new FragmentThree(), "STATIST");
 
         viewPager.setAdapter(adapter);
-    }
 
+    }
 
     class ViewPagerAdapter extends FragmentPagerAdapter {
 
-        private final List<Fragment> mFragmentList = new ArrayList<>();
-        private final List<String> mFragmentTitleList = new ArrayList<>();
+    private final List<Fragment> mFragmentList = new ArrayList<>();
+    private final List<String> mFragmentTitleList = new ArrayList<>();
 
-        public ViewPagerAdapter(FragmentManager manager) {
-            super(manager);
-        }
+    public ViewPagerAdapter(FragmentManager manager) {
+        super(manager);
+    }
 
-        @Override
-        public Fragment getItem(int position) {
-            return mFragmentList.get(position);
-        }
+    @Override
+    public Fragment getItem(int position) {
+        return mFragmentList.get(position);
+    }
 
-        @Override
-        public int getCount() {
-            return mFragmentList.size();
-        }
+    @Override
+    public int getCount() {
+        return mFragmentList.size();
+    }
 
-        public void addFragment(Fragment fragment, String title) {
-            mFragmentList.add(fragment);
-            mFragmentTitleList.add(title);
-        }
+    public void addFragment(Fragment fragment, String title) {
+        mFragmentList.add(fragment);
+        mFragmentTitleList.add(title);
+    }
 
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return mFragmentTitleList.get(position);
-        }
+    @Override
+    public CharSequence getPageTitle(int position) {
+        return mFragmentTitleList.get(position);
+    }
     }
 
     // ============== FRAGMENT COMMUNICATION ==============
     @Override
     public void onFragmentInteraction(String userContent) {
+        Log.i(LOG_TAG, "infos: adding 2 '" + userContent + "' to history ListView...");
+
         global_hist.updateTextField(userContent);
     }
 }
